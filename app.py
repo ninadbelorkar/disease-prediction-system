@@ -4,31 +4,21 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
-working_dir = os.path.dirname(os.path.abspath(__file__))
-
-model_paths = {
-    "diabetes": os.path.join(working_dir, "diabetes_svm_model.sav"),
-    "heart": os.path.join(working_dir, "heart_disease_model1.sav"),
-    "parkinsons": os.path.join(working_dir, "parkinsons_model.sav")
-}
 
 try:
-    diabetes_model = pickle.load(open(model_paths["diabetes"], 'rb'))
-    heart_disease_model = pickle.load(open(model_paths["heart"], 'rb'))
-    parkinsons_model = pickle.load(open(model_paths["parkinsons"], 'rb'))
-except FileNotFoundError as e:
-    print(f"Model file missing: {e}")
-    exit(1)
+    working_dir = os.path.dirname(os.path.abspath(__file__))
+    diabetes_model = pickle.load(open(os.path.join(working_dir, 'diabetes_svm_model.sav'), 'rb'))
+    heart_disease_model = pickle.load(open(os.path.join(working_dir, 'heart_disease_model1.sav'), 'rb'))
+    parkinsons_model = pickle.load(open(os.path.join(working_dir, 'parkinsons_model.sav'), 'rb'))
 except Exception as e:
     print(f"Error loading models: {e}")
-    exit(1)
 
-# Home Page Route
+# Home page route
 @app.route('/')
 def home():
     return render_template('index.html')
 
-# Diabetes Prediction Route
+# Diabetes prediction route
 @app.route('/predict_diabetes', methods=['POST'])
 def predict_diabetes():
     try:
@@ -41,7 +31,7 @@ def predict_diabetes():
     except Exception as e:
         return jsonify({'error': str(e)})
 
-# Heart Disease Prediction Route
+# Heart disease prediction route
 @app.route('/predict_heart_disease', methods=['POST'])
 def predict_heart_disease():
     try:
@@ -54,7 +44,7 @@ def predict_heart_disease():
     except Exception as e:
         return jsonify({'error': str(e)})
 
-# Parkinson's Disease Prediction Route
+# Parkinson's disease prediction route
 @app.route('/predict_parkinsons', methods=['POST'])
 def predict_parkinsons():
     try:
@@ -70,4 +60,4 @@ def predict_parkinsons():
         return jsonify({'error': str(e)})
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=10000)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 10000)))
