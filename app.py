@@ -6,44 +6,55 @@ app = Flask(__name__)
 
 working_dir = os.path.dirname(os.path.abspath(__file__))
 
-diabetes_model = pickle.load(open(f'{working_dir}/diabetes_svm_model.sav', 'rb'))
-heart_disease_model = pickle.load(open(f'{working_dir}/heart_disease_model1.sav', 'rb'))
-parkinsons_model = pickle.load(open(f'{working_dir}/parkinsons_model.sav', 'rb'))
+model_paths = {
+    "diabetes": os.path.join(working_dir, "diabetes_svm_model.sav"),
+    "heart": os.path.join(working_dir, "heart_disease_model1.sav"),
+    "parkinsons": os.path.join(working_dir, "parkinsons_model.sav")
+}
 
-# Home Page
+try:
+    diabetes_model = pickle.load(open(model_paths["diabetes"], 'rb'))
+    heart_disease_model = pickle.load(open(model_paths["heart"], 'rb'))
+    parkinsons_model = pickle.load(open(model_paths["parkinsons"], 'rb'))
+except FileNotFoundError as e:
+    print(f"Model file missing: {e}")
+    exit(1)
+except Exception as e:
+    print(f"Error loading models: {e}")
+    exit(1)
+
+# Home Page Route
 @app.route('/')
 def home():
     return render_template('index.html')
 
-# Diabetes Prediction
+# Diabetes Prediction Route
 @app.route('/predict_diabetes', methods=['POST'])
 def predict_diabetes():
     try:
         data = [float(request.form[key]) for key in [
             'Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin',
             'BMI', 'DiabetesPedigreeFunction', 'Age']]
-        
         prediction = diabetes_model.predict([data])[0]
         result = 'The person is diabetic' if prediction == 1 else 'The person is not diabetic'
         return jsonify({'result': result})
     except Exception as e:
         return jsonify({'error': str(e)})
 
-# Heart Disease Prediction
+# Heart Disease Prediction Route
 @app.route('/predict_heart_disease', methods=['POST'])
 def predict_heart_disease():
     try:
         data = [float(request.form[key]) for key in [
             'age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg',
             'thalach', 'exang', 'oldpeak', 'slope', 'ca', 'thal']]
-        
         prediction = heart_disease_model.predict([data])[0]
         result = 'The person has heart disease' if prediction == 1 else 'The person does not have heart disease'
         return jsonify({'result': result})
     except Exception as e:
         return jsonify({'error': str(e)})
 
-# Parkinson's Prediction
+# Parkinson's Disease Prediction Route
 @app.route('/predict_parkinsons', methods=['POST'])
 def predict_parkinsons():
     try:
@@ -52,7 +63,6 @@ def predict_parkinsons():
             'RAP', 'PPQ', 'DDP', 'Shimmer', 'Shimmer_dB',
             'APQ3', 'APQ5', 'APQ', 'DDA', 'NHR',
             'HNR', 'RPDE', 'DFA', 'spread1', 'spread2', 'D2', 'PPE']]
-        
         prediction = parkinsons_model.predict([data])[0]
         result = "The person has Parkinson's disease" if prediction == 1 else "The person does not have Parkinson's disease"
         return jsonify({'result': result})
@@ -60,4 +70,4 @@ def predict_parkinsons():
         return jsonify({'error': str(e)})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=10000)
