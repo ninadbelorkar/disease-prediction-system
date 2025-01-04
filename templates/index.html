@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Disease Prediction System</h1>
+        
+        <!-- Diabetes Prediction Form -->
+        <h3>Diabetes Prediction</h3>
+        <form action="/predict_diabetes" method="post">
+            <input type="text" name="Pregnancies" placeholder="Number of Pregnancies" required>
+            <input type="text" name="Glucose" placeholder="Glucose Level" required>
+            <input type="text" name="BloodPressure" placeholder="Blood Pressure" required>
+            <input type="text" name="SkinThickness" placeholder="Skin Thickness" required>
+            <input type="text" name="Insulin" placeholder="Insulin Level" required>
+            <input type="text" name="BMI" placeholder="BMI Value" required>
+            <input type="text" name="DiabetesPedigreeFunction" placeholder="Diabetes Pedigree Function" required>
+            <input type="text" name="Age" placeholder="Age" required>
+            <button type="submit" class="btn btn-primary">Predict Diabetes</button>
+        </form>
+
+        <br><br>
+
+        <!-- Heart Disease Prediction Form -->
+        <h3>Heart Disease Prediction</h3>
+        <form action="/predict_heart_disease" method="post">
+            <input type="text" name="age" placeholder="Age" required>
+            <input type="text" name="sex" placeholder="Sex (0 or 1)" required>
+            <input type="text" name="cp" placeholder="Chest Pain Type" required>
+            <input type="text" name="trestbps" placeholder="Resting Blood Pressure" required>
+            <input type="text" name="chol" placeholder="Cholesterol Level" required>
+            <input type="text" name="fbs" placeholder="Fasting Blood Sugar" required>
+            <input type="text" name="restecg" placeholder="Resting ECG Results" required>
+            <input type="text" name="thalach" placeholder="Max Heart Rate Achieved" required>
+            <input type="text" name="exang" placeholder="Exercise Induced Angina" required>
+            <input type="text" name="oldpeak" placeholder="Oldpeak Value" required>
+            <input type="text" name="slope" placeholder="Slope Value" required>
+            <input type="text" name="ca" placeholder="Number of Major Vessels" required>
+            <input type="text" name="thal" placeholder="Thalassemia Type" required>
+            <button type="submit" class="btn btn-primary">Predict Heart Disease</button>
+        </form>
+
+        <br><br>
+
+        <!-- Parkinson's Prediction Form -->
+        <h3>Parkinson's Disease Prediction</h3>
+        <form action="/predict_parkinsons" method="post">
+            <input type="text" name="fo" placeholder="MDVP:Fo(Hz)" required>
+            <input type="text" name="fhi" placeholder="MDVP:Fhi(Hz)" required>
+            <input type="text" name="flo" placeholder="MDVP:Flo(Hz)" required>
+            <input type="text" name="Jitter_percent" placeholder="MDVP:Jitter(%)" required>
+            <input type="text" name="Jitter_Abs" placeholder="MDVP:Jitter(Abs)" required>
+            <input type="text" name="RAP" placeholder="MDVP:RAP" required>
+            <input type="text" name="PPQ" placeholder="MDVP:PPQ" required>
+            <input type="text" name="DDP" placeholder="Jitter:DDP" required>
+            <input type="text" name="Shimmer" placeholder="MDVP:Shimmer" required>
+            <input type="text" name="Shimmer_dB" placeholder="MDVP:Shimmer(dB)" required>
+            <input type="text" name="APQ3" placeholder="Shimmer:APQ3" required>
+            <input type="text" name="APQ5" placeholder="Shimmer:APQ5" required>
+            <input type="text" name="APQ" placeholder="MDVP:APQ" required>
+            <input type="text" name="DDA" placeholder="Shimmer:DDA" required>
+            <input type="text" name="NHR" placeholder="NHR" required>
+            <input type="text" name="HNR" placeholder="HNR" required>
+            <input type="text" name="RPDE" placeholder="RPDE" required>
+            <input type="text" name="DFA" placeholder="DFA" required>
+            <input type="text" name="spread1" placeholder="spread1" required>
+            <input type="text" name="spread2" placeholder="spread2" required>
+            <input type="text" name="D2" placeholder="D2" required>
+            <input type="text" name="PPE" placeholder="PPE" required>
+            <button type="submit" class="btn btn-primary">Predict Parkinson's</button>
+        </form>
+    </div>
+</body>
+</html>
